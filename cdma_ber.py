@@ -27,8 +27,9 @@ def generate_pn_sequence(pn_order):
 #     pn_order), generate_alternate_binary_string(pn_order), 2**pn_order-1)
 # pn_seq[pn_seq == 0] = -1
 
+# pn_seq = generate_pn_sequence(8)
 
-# if (0):
+# if (1):
 #     # check Balancing Property
 #     print((1-np.sum(pn_seq)/len(pn_seq))*100, "% balanced")
 
@@ -86,7 +87,7 @@ def generate_BER_CDMA(MESSAGE_SIZE, SNR_DB_RANGE, pn_order, fading=False):
               ",", round(np.var(h), 3), ")")
 
         # generate Received Signal
-        received_signal = h*transmitted_signal + noise
+        received_signal = h * transmitted_signal + noise
         received_signal = received_signal.reshape(
             (MESSAGE_SIZE, 2**pn_order-1))
 
@@ -103,7 +104,7 @@ def generate_BER_CDMA(MESSAGE_SIZE, SNR_DB_RANGE, pn_order, fading=False):
         ber_1 = np.sum(received_message_1 != message_1)/MESSAGE_SIZE
         ber_2 = np.sum(received_message_2 != message_2)/MESSAGE_SIZE
 
-        ber_avg = (ber_1+ber_2)/2
+        ber_avg = max(ber_1, ber_2)
         BER_CDMA.append(ber_avg)
 
     return BER_CDMA
