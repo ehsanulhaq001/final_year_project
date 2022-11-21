@@ -7,17 +7,17 @@ def q_function(x):
     return 0.5-0.5*special.erf(x/np.sqrt(2))
 
 
-def generate_noise(signal, Eb_N0):
+def generate_noise(signal, srn):
     """Generates Noise for given size and Power"""
 
     ns = len(signal)
-    noise = (1 / np.sqrt(2 * Eb_N0)) * (
+    noise = (1 / np.sqrt(2 * srn)) * (
         np.random.normal(size=ns) + np.random.normal(size=ns) * 1j
     )
     return noise
 
 
-def generate_QPSK_BER_vs_EbN0_Pr(Eb_N0_dB_range):
+def generate_QPSK_BER_vs_EbN0_Pr(srn_dB_range):
     """Generates BER vs Eb/N0 for QPSK"""
 
     msg = np.random.randint(low=0, high=2, size=int(1e5))
@@ -43,9 +43,9 @@ def generate_QPSK_BER_vs_EbN0_Pr(Eb_N0_dB_range):
 
     BER_wireless = []
     BER_AWGN = []
-    for Eb_N0_dB in Eb_N0_dB_range:
-        Eb_N0 = 10 ** (Eb_N0_dB / 10.0)
-        noise = generate_noise(signal, Eb_N0)
+    for srn_dB in srn_dB_range:
+        srn = 10 ** (srn_dB / 10.0)
+        noise = generate_noise(signal, srn)
 
         h = (1 / np.sqrt(2)) * (
             np.random.normal(size=len(signal)) + 1j *
