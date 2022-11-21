@@ -81,7 +81,7 @@ def generate_BER_CDMA(MESSAGE_SIZE, SNR_DB_RANGE, pn_order, fading=False):
 
         h = np.ones(len(transmitted_signal))
         if (fading):
-            h = 1 - np.random.normal(size=len(transmitted_signal))/2
+            h = 1 + np.random.normal(size=len(transmitted_signal))/2
 
         print("fading: N(", round(np.mean(h), 3),
               ",", round(np.var(h), 3), ")")
